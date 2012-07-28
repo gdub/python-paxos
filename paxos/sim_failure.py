@@ -6,10 +6,10 @@ node failures.
 from collections import namedtuple
 import random
 
-from messages import ClientRequestMsg, AdjustWeightsMsg
 from paxos import SystemConfig
-from sim import Mailbox
-from test import DebugMailbox
+from paxos.messages import ClientRequestMsg, AdjustWeightsMsg
+from paxos.sim import Mailbox
+from paxos.test import DebugMailbox
 
 
 class FailTestMailbox(Mailbox):

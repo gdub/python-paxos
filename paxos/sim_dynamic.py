@@ -1,6 +1,8 @@
-from sim_failure import *
-from test import DebugSystem
 import time
+
+from paxos.sim_failure import *
+from paxos.test import DebugSystem
+
 
 def run_test(config, delay=0):
     system = DebugSystem(config, mailbox=DebugFailTestMailbox)

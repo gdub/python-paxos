@@ -3,9 +3,10 @@ import time
 from threading import Thread
 from multiprocessing import Queue
 from queue import Empty
-from messages import *
-from protocol import *
-from analyzer import *
+
+from paxos.messages import *
+from paxos.protocol import *
+from paxos.analyzer import *
 
 
 class BaseSystem:

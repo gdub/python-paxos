@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from messages import *
+from paxos.messages import *
 
 
 class BasicPaxosProtocol:

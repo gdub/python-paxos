@@ -3,9 +3,9 @@ from multiprocessing import Queue
 import random
 import time
 
-from messages import *
 from paxos import SystemConfig
-from sim import System, Mailbox
+from paxos.messages import *
+from paxos.sim import System, Mailbox
 
 
 class DebugMailbox(Mailbox):
