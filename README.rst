@@ -5,6 +5,18 @@ Paxos
 This is a demo implementation of the Paxos algorithm implemented in Python.
 
 
+Requirements
+============
+* Python 3
+
+
+Install
+=======
+::
+
+    pip install paxos
+
+
 Implementation Notes
 ====================
 
@@ -15,7 +27,7 @@ Implementation Notes
   processes are run on the same machine.
 * Paxos Made Simple states that "we require that different proposals have
   different numbers."  To achieve this, we start each proposer process's
-  proposal number sequence equal to its own pid, and then increment the number
+  proposal number sequence equal to its own PID, and then increment the number
   for each new proposal by the number of proposer processes in the system.
   This also seems to be the method used in the "Paxos Made Live" paper by
   Google employees.
