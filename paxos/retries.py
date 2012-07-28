@@ -6,8 +6,8 @@ learned by one or more learners.
 import time
 from threading import Thread
 
-from messages import RetryMsg
 from paxos import Proposer, Learner
+from paxos.messages import RetryMsg
 
 
 class RetryProposer(Proposer):
