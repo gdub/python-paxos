@@ -1,4 +1,4 @@
-Copyright (c) Gary Wilson Jr. <gary@thegarywilson.com> and contributors.
+Copyright (c) Gary Wilson Jr., Michael Stathopoulos, and contributors.
 All rights reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
