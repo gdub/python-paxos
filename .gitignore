@@ -1,3 +1,5 @@
 .*project
 *.pyc
 *~
+dist
+*egg-info*
