@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 
 setup(
@@ -6,7 +6,7 @@ setup(
     version='0.1',
     author='Gary Wilson Jr. and Michael Stathopoulos',
 #    author_email='',
-    packages=['paxos'],
+    packages=find_packages(),
     url='https://github.com/gdub/python-paxos',
     license='MIT',
     description='A demo implementation of the Paxos algorithm implemented in Python.',
