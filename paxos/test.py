@@ -165,7 +165,7 @@ def test_multi_paxos():
     system.start()
 
     for x in range(20):
-        # Always send to the same proposer, effective using that proposer as
+        # Always send to the same proposer, effectively using that proposer as
         # the leader.
         to = 0
         system.mailbox.send(to, ClientRequestMsg(None, "Query {}".format(x)))
