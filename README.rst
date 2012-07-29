@@ -2,7 +2,18 @@
 Paxos
 =====
 
-This is a demo implementation of the Paxos algorithm implemented in Python.
+A demo implementation of the `Paxos`_ `consensus`_ algorithm implemented
+in Python.
+
+This was work for a class project in distributed computing to study a weighted
+version of the Paxos algorithm, in which a `quorum`_ is a majority of weight
+instead of a majority of processes.  Weighted Paxos is a generalization of
+standard Paxos, which is equivalent to a weighted system where processes are
+assigned equal weights.
+
+.. _Paxos: http://en.wikipedia.org/wiki/Paxos_(computer_science)
+.. _consensus: http://en.wikipedia.org/wiki/Consensus_(computer_science)
+.. _quorum: http://en.wikipedia.org/wiki/Quorum_(distributed_computing)
 
 
 Requirements
