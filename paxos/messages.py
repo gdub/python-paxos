@@ -53,6 +53,12 @@ class AcceptMsg(ProposalMsg):
 class AcceptResponseMsg(ProposalMsg):
     name = "Accept Response"
 
+
+class HeartbeatMsg(Message):
+    def __str__(self):
+        return "Heartbeat: {}".format(self.source)
+
+
 class RetryMsg(Message):
     def __init__(self, source, instance):
         super(RetryMsg, self).__init__(source)

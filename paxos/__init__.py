@@ -28,6 +28,7 @@ class Agent:
         self.pid = pid
         self.mailbox = mailbox
         self.logger = logger
+        self.leader = 0
         # Flag that will shutdown process.
         self.active = True
         # Flag for any process threads to shutdown.
@@ -109,6 +110,42 @@ class Proposer(Agent):
         self.instances = {}
         self.instance_sequence = 1
 
+        # Initialization for leader election / heartbeat monitoring
+        self.heartbeat_queue = Queue()
+
+    class HeartbeatSender(Thread):
+        def __init__(self, agent):
+            Thread.__init__(self, name="HeartbeatSender-{}".format(agent.pid))
+            self.agent = agent
+        def run(self):
+            while True:
+                if self.agent.config:
+                    msg = HeartbeatMsg(self.agent.pid)
+                    ids = [id for id in self.agent.config.proposer_ids if self.agent.pid != id]
+                    self.agent.send_message(msg, ids)
+                    time.sleep(0.5)
+
+    class HeartbeatListener(Thread):
+        def __init__(self, agent):
+            Thread.__init__(self, name="HeartbeatListener-{}".format(agent.pid))
+            self.agent = agent
+        def run(self):
+            while True:
+                try:
+                    id = self.agent.heartbeat_queue.get(True,1)
+                except Empty:
+                    self.agent.leader = self.agent.pid
+                else:
+                    if id < self.agent.leader:
+                        self.agent.leader = id
+
+    def run(self):
+        self.heartbeat_sender = self.HeartbeatSender(self)
+        self.heartbeat_listener = self.HeartbeatListener(self)
+        self.heartbeat_sender.start()
+        self.heartbeat_listener.start()
+        super(Proposer, self).run()
+
     def set_config(self, config):
         """
         Set this process's sequence step to the number of proposers.
@@ -134,6 +171,8 @@ class Proposer(Agent):
             self.handle_prepare_response(msg)
         elif isinstance(msg, AcceptResponseMsg):
             self.handle_accept_response(msg)
+        elif isinstance(msg, HeartbeatMsg):
+            self.handle_heartbeat_msg(msg)
 
     def create_proposal(self, instance=None):
         """
@@ -159,6 +198,10 @@ class Proposer(Agent):
         """
         Start a Paxos instance.
         """
+        if self.pid != self.leader:
+            self.send_message(msg, [self.leader])
+            return
+
         proposal = self.create_proposal(instance)
         if proposal.instance not in self.instances:
             self.instances[proposal.instance] = {}
@@ -174,6 +217,8 @@ class Proposer(Agent):
     def handle_accept_response(self, msg):
         self.instances[msg.proposal.instance][msg.proposal.number].handle_accept_response(msg)
 
+    def handle_heartbeat_msg(self, msg):
+        self.heartbeat_queue.put(msg.source)
 
 class Acceptor(Agent):
 
